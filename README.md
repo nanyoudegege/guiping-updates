@@ -1,2 +1,38 @@
-# guiping-updates
-归屏远程 Windows 与安卓更新
+# 归屏远程
+
+用安卓手机、平板或另一台 Windows 电脑连接自己的 Windows 桌面。两端登录同一个个人 Tailscale 账号，电脑可以留在家里。每位使用者连接自己的设备，机主可以把某台设备改为仅观看，或撤销它的访问权限。
+
+**首次使用**　[Windows 10/11 x64 安装包](https://github.com/nanyoudegege/guiping-updates/releases/download/v0.1.17/GuipingRemote-Setup-0.1.17.exe) · [安卓 APK](https://github.com/nanyoudegege/guiping-updates/releases/download/v0.1.17/GuipingRemote-0.1.17.apk) · [操作指南](GUIDE.md)
+
+## 0.1.17 已经能做什么
+
+| 场景 | 实际能做的事 |
+| --- | --- |
+| 用手机操作 Windows | 可输入中文，使用可编辑的快捷键和电脑全键盘。浮动鼠标用箭尖瞄准，可以左击、右击、拖动窗口和滚动。 |
+| 用两台 Windows 电脑互控 | 可从设备列表进入对方桌面，传送键鼠和声音，或打开只观看的窗口。远控画面取得焦点后，Win 和 Win+E 在被控电脑生效。 |
+| 在外面连回家 | 在网络允许时直连，必要时经 Tailscale 的 DERP 中转。安卓能查看实际线路、延迟和视频码率，并在会话内自动调节 Windows 编码目标。 |
+| 把平板当显示器 | 超级屏可按控制端的分辨率请求虚拟桌面。扩展副屏保留电脑主屏，可把一个窗口拖到平板。两种模式都需要被控电脑安装虚拟显示驱动。 |
+| 收发文件 | 可以从授权共享的目录取文件，也可从 Windows 向目标设备发送文件或文件夹。仅观看的设备没有共享文件读取权。 |
+| 更新已安装的设备 | 从本版起，Windows 和安卓都能检查同一个签名更新清单。无人值守 Windows 在会话结束、本机空闲后安装，安卓由使用者确认安装。 |
+
+桌面串流沿用 Artemis、Apollo 和 Moonlight Qt，跨网连接使用 Tailscale。本项目在这些组件之上实现设备发现与授权界面、安卓操作面板、会话内码率调节、显示模式切换、文件收发和签名更新。[Artemis](https://github.com/ClassicOldSong/moonlight-android) · [Apollo](https://github.com/ClassicOldSong/Apollo) · [Moonlight Qt](https://github.com/moonlight-stream/moonlight-qt) · [Tailscale](https://github.com/tailscale/tailscale)
+
+## 已验证到哪里
+
+- **Windows 互控。** 在两台独立的 Windows Server 2025 虚拟机上，用 0.1.15 交换主控和被控角色，验证了画面、键鼠、声音、仅观看、文件收发和断线重连。0.1.16 又验证了窗口与全屏中的 Win、Win+E，以及释放键鼠后操作本机。Windows 的这组测试使用 1024 × 768 和软件编码。
+- **安卓操作。** 在 iQOO 10 上实测了中文输入、快捷键、数字小键盘与会话内码率调整。安卓平板之间的画面共享、点按和滑动在两个独立安卓模拟器中验证。
+- **本版更新。** 0.1.17 增加签名更新。安卓本版的 195 项自动化测试全部通过，其中包含更新清单验签和安装包完整性校验。
+
+## 目前的不足
+
+- **高分辨率和高刷新率仍看硬件。** 实体 Intel 核显的 4K 高刷、不同品牌平板的锁屏恢复，以及各家宽带的直连成功率，仍缺少足够实机数据。码率上限也不能直接换算成可达到的帧率。
+- **普通 Windows 串流的剪贴板是单向的。** 已验证从主控向被控粘贴文字。被控端复制的文字不会自动回到主控端。文件可以使用独立的「文件传输」。
+- **睡眠和关机主机的异地唤醒仍待验证。** 日常无人值守需要电脑已开机、联网且醒着。要在 Windows 用户登录前接入，需要管理员预先设置开机控制台。
+- **Windows 首次安装有一道识别门槛。** 这一版 EXE 尚无 Windows 发布者签名，系统可能显示「未知发布者」。发布页列出了首装文件的 SHA-256，已安装的归屏会用内置公钥验证后续更新清单。
+- **目前提供 Windows x64 和安卓安装包。** macOS、iPhone 和 Linux 暂无归屏安装包。
+
+## 更新与源码
+
+0.1.16 及更早的版本需要手动覆盖安装一次。之后每台设备保存一次更新地址，即可跟随这里的发布版本。[设置更新地址](GUIDE.md#五让设备检查新版) · [0.1.17 发布说明与校验值](https://github.com/nanyoudegege/guiping-updates/releases/tag/v0.1.17)
+
+开发者请下载与版本配套的源码 ZIP，其中有归屏的应用与工具源码、串流及跨网组件的补丁、上游版本记录、构建脚本和许可证。GitHub 自动生成的 “Source code” 归档只打包这个发布仓库中的说明文件。[下载 0.1.17 对应源码](https://github.com/nanyoudegege/guiping-updates/releases/download/v0.1.17/GuipingRemote-0.1.17-source.zip)
