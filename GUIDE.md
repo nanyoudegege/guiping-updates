@@ -67,3 +67,9 @@
 | 今天手动检查显示「已是最新版本」 | 核对设备上显示的版本与发布页一致即可。如果以前使用了自定义来源，清空后保存可恢复官方来源。 |
 
 源码包中的《使用说明.md》还收录了文件续传、Windows 登录兼容工具和从源码构建的步骤。[本次发布对应源码](https://github.com/nanyoudegege/guiping-updates/releases/download/v0.1.19/GuipingRemote-0.1.19-source.zip)
+
+## 七、构建 Windows 0.1.19
+
+在 Windows x64 准备 .NET Framework 4.8、Git、Go、MinGW-w64 g++、CMake、Ninja、7-Zip 和 Visual Studio 2022 C++ x64 构建工具。将命令行工具加入 PATH，解压本次发布的源码包，从源码根目录运行 `windows/build.ps1`。脚本下载并校验固定版本的 Qt SDK 和播放器依赖，输出在 `dist`。
+
+普通远控播放器基于 Moonlight Qt 6.2.0，构建时会应用 `windows/viewer/moonlight-stats.patch`。仅观看使用独立播放器，两者共用统计面板。源码包附带上游播放器和子模块源码，版本记录在 `SOURCE-VERSION.txt`。
