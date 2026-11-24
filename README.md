@@ -2,17 +2,17 @@
 
 用安卓手机、平板或另一台 Windows 电脑连接自己的 Windows 桌面。两端登录同一个个人 Tailscale 账号，电脑可以留在家里。每位使用者连接自己的设备，机主可以把某台设备改为仅观看，或撤销它的访问权限。
 
-**首次使用**　[Windows 10/11 x64 安装包](https://github.com/nanyoudegege/guiping-updates/releases/download/v0.1.18/GuipingRemote-Setup-0.1.18.exe) · [安卓 APK](https://github.com/nanyoudegege/guiping-updates/releases/download/v0.1.18/GuipingRemote-0.1.18.apk) · [操作指南](GUIDE.md)
+**首次使用**　[Windows 10/11 x64 安装包](https://github.com/nanyoudegege/guiping-updates/releases/download/v0.1.19/GuipingRemote-Setup-0.1.19.exe) · [安卓 APK](https://github.com/nanyoudegege/guiping-updates/releases/download/v0.1.19/GuipingRemote-0.1.18.apk) · [操作指南](GUIDE.md)
 
-## 0.1.18 已经能做什么
+## Windows 0.1.19 和安卓 0.1.18 已经能做什么
 
 | 场景 | 实际能做的事 |
 | --- | --- |
 | 用手机操作 Windows | 可输入中文，使用可编辑的快捷键和电脑全键盘。浮动鼠标用箭尖瞄准，可以左击、右击、拖动窗口和滚动。 |
-| 用两台 Windows 电脑互控 | 可从设备列表进入对方桌面，传送键鼠和声音，或打开只观看的窗口。远控画面取得焦点后，Win 和 Win+E 在被控电脑生效。 |
+| 用两台 Windows 电脑互控 | 可从设备列表进入对方桌面，传送键鼠和声音，或打开只观看的窗口。远控画面取得焦点后，Win 和 Win+E 在被控电脑生效。主控窗口右下角可以看线路、渲染帧率、实际码率、延迟和控制通道丢包率。 |
 | 在外面连回家 | 在网络允许时直连，必要时经 Tailscale 的 DERP 中转。安卓能查看实际线路、延迟和视频码率，并在会话内自动调节 Windows 编码目标。 |
 | 把平板当显示器 | 超级屏可按控制端的分辨率请求虚拟桌面。扩展副屏保留电脑主屏，可把一个窗口拖到平板。两种模式都需要被控电脑安装虚拟显示驱动。 |
-| 收发文件 | 可以从授权共享的目录取文件，也可从 Windows 向目标设备发送文件或文件夹。仅观看的设备没有共享文件读取权。 |
+| 收发文件 | 两台 Windows 都装 0.1.19 时，在被控端把文件拖入右下角圆钮，点「发送」，文件就会存到主控端的「下载」。也可使用设备详情发送文件，或从授权共享的目录取文件。仅观看的设备没有共享文件读取权。 |
 | 更新已安装的设备 | Windows 和安卓内置同一个官方更新地址，启动后会自行检查签名清单。无人值守 Windows 在会话结束、本机空闲后安装，安卓由使用者确认安装。 |
 
 桌面串流沿用 Artemis、Apollo 和 Moonlight Qt，跨网连接使用 Tailscale。本项目在这些组件之上实现设备发现与授权界面、安卓操作面板、会话内码率调节、显示模式切换、文件收发和签名更新。[Artemis](https://github.com/ClassicOldSong/moonlight-android) · [Apollo](https://github.com/ClassicOldSong/Apollo) · [Moonlight Qt](https://github.com/moonlight-stream/moonlight-qt) · [Tailscale](https://github.com/tailscale/tailscale)
@@ -20,6 +20,7 @@
 ## 已验证到哪里
 
 - **Windows 互控。** 在两台独立的 Windows Server 2025 虚拟机上，用 0.1.15 交换主控和被控角色，验证了画面、键鼠、声音、仅观看、文件收发和断线重连。0.1.16 又验证了窗口与全屏中的 Win、Win+E，以及释放键鼠后操作本机。Windows 的这组测试使用 1024 × 768 和软件编码。
+- **Windows 0.1.19 新功能。** 在同机的独立串流会话里验证了普通远控与仅观看窗口的实时统计。用 Windows 原生拖放验证了拖文本不会出现圆钮、文件需要点击发送才会送达，并检查了重名、文件夹、授权撤销和中断清理。两台异地实体机之间尚未复测这两项新增功能。
 - **安卓操作。** 在 iQOO 10 上实测了中文输入、快捷键、数字小键盘与会话内码率调整。手机查看或操作安卓平板的画面共享、点按和滑动，用两个独立安卓模拟器做了验证。
 - **安装、登录与更新。** Windows 0.1.18 覆盖了首次安装、从 0.1.17 原位升级、桌面快捷方式、托盘收起与恢复，以及首次登录链接的回归测试。安卓 196 项自动化测试通过，两端均验证了默认更新来源、清单验签和安装包完整性。
 
@@ -33,6 +34,6 @@
 
 ## 更新与源码
 
-新设备安装 0.1.18 后会自动检查官方发布。如果旧版没有配置更新来源，覆盖安装一次 0.1.18 即可。已配置官方来源的 0.1.17 可直接检查更新。[更新指南](GUIDE.md#五让设备检查新版) · [0.1.18 发布说明与校验值](https://github.com/nanyoudegege/guiping-updates/releases/tag/v0.1.18)
+Windows 0.1.19 和安卓 0.1.18 都会自动检查官方发布。旧版如果没有配置更新来源，覆盖安装一次对应平台的新包即可。已使用官方来源的设备可直接检查更新。[更新指南](GUIDE.md#五让设备检查新版) · [本次发布说明与校验值](https://github.com/nanyoudegege/guiping-updates/releases/tag/v0.1.19)
 
-开发者请下载与版本配套的源码 ZIP，其中有归屏的应用与工具源码、串流及跨网组件的补丁、上游版本记录、构建脚本和许可证。GitHub 自动生成的 “Source code” 归档只打包这个发布仓库中的说明文件。[下载 0.1.18 对应源码](https://github.com/nanyoudegege/guiping-updates/releases/download/v0.1.18/GuipingRemote-0.1.18-source.zip)
+开发者请下载与版本配套的源码 ZIP，其中有归屏的应用与工具源码、串流及跨网组件的补丁、上游版本记录、构建脚本和许可证。GitHub 自动生成的 “Source code” 归档只打包这个发布仓库中的说明文件。[下载本次发布对应源码](https://github.com/nanyoudegege/guiping-updates/releases/download/v0.1.19/GuipingRemote-0.1.19-source.zip)
